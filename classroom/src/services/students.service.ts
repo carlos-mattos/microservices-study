@@ -1,5 +1,11 @@
-import { PrismaService } from 'src/database/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../database/prisma/prisma.service';
 
+interface CreateStudent {
+  authUserId: string;
+}
+
+@Injectable()
 export default class StudentsService {
   constructor(private prisma: PrismaService) {}
 
@@ -7,9 +13,11 @@ export default class StudentsService {
     return this.prisma.student.findMany();
   }
 
-  async getStudentByAuthUserId(authUserId: string) {
+  getStudentByAuthUserId(authUserId: string) {
     return this.prisma.student.findUnique({
-      where: { authUserId },
+      where: {
+        authUserId,
+      },
     });
   }
 
@@ -17,6 +25,14 @@ export default class StudentsService {
     return this.prisma.student.findUnique({
       where: {
         id,
+      },
+    });
+  }
+
+  create({ authUserId }: CreateStudent) {
+    return this.prisma.student.create({
+      data: {
+        authUserId,
       },
     });
   }

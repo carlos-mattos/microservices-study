@@ -9,7 +9,7 @@ interface CreateCustomerParams {
 export default class CustomersService {
   constructor(private prisma: PrismaService) {}
 
-  async getCustomerByAuthUserId(authUserId: string) {
+  getCustomerByAuthUserId(authUserId: string) {
     return this.prisma.customer.findUnique({
       where: { authUserId },
     });

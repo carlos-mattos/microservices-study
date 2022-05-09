@@ -10,8 +10,8 @@ interface CreateProductParams {
 export default class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  async listAllProducts() {
-    return await this.prisma.product.findMany();
+  listAllProducts() {
+    return this.prisma.product.findMany();
   }
 
   async createProduct({ title }: CreateProductParams) {
